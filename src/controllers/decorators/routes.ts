@@ -1,3 +1,4 @@
+import { RequestHandler } from "express";
 import "reflect-metadata";
 import MetadataKeys from "./MetadataKeys";
 import Methods from "./Methods";
@@ -6,13 +7,19 @@ export interface DecoratorFunction {
   (target: any, key?: string, desc?: PropertyDescriptor): void;
 }
 
+interface RouteHandlerDescriptor extends PropertyDescriptor {
+  value?: RequestHandler;
+}
+
 function routeBinder(method: string) {
-  return function methodWithPath(path: string): DecoratorFunction {
-    return function getDecorator(target: any, key?: string) {
-      if (key) {
-        Reflect.defineMetadata(MetadataKeys.path, path, target, key);
-        Reflect.defineMetadata(MetadataKeys.method, method, target, key);
-      }
+  return function methodWithPath(path: string) {
+    return function getDecorator(
+      target: any,
+      key: string,
+      desc: RouteHandlerDescriptor
+    ) {
+      Reflect.defineMetadata(MetadataKeys.path, path, target, key);
+      Reflect.defineMetadata(MetadataKeys.method, method, target, key);
     };
   };
 }
