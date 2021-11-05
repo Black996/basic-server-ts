@@ -1,8 +1,8 @@
 import "reflect-metadata";
-import express from "express";
 import { DecoratorFunction } from "./routes";
+import AppRouter from "../../AppRouter";
 
-export const router = express.Router();
+export const router = AppRouter.getInstance();
 
 export function controller(routePrefix: string): DecoratorFunction {
   return function controllerDecorator(target: Function) {

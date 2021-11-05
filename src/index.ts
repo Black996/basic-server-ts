@@ -2,13 +2,14 @@ import cookieSession from "cookie-session";
 import express, { Response, Request } from "express";
 import { router } from "./routes/loginRoutes";
 import "./controllers/LoginController";
-import { router as controllerRouter } from "./controllers/decorators/controller";
+import AppRouter from "./AppRouter";
 
 const app = express();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieSession({ keys: ["crypto"] }));
 app.use(router);
+app.use(AppRouter.getInstance());
 
 app.get("/", (req: Request, res: Response) => {
   if (req.session) {

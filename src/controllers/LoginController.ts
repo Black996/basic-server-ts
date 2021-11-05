@@ -1,12 +1,11 @@
 import { Request, Response } from "express";
-import { controller } from "./decorators/controller";
-import { get } from "./decorators/routes";
+import { controller, get } from "./decorators";
 
 interface RequestWithBody extends Request {
   body: { [key: string]: string | undefined };
 }
 
-@controller("/")
+@controller("/auth")
 class LoginController {
   @get("/login")
   getLoginForm(req: RequestWithBody, res: Response): void {
