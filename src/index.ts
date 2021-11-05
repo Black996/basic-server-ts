@@ -24,7 +24,7 @@ app.get("/", (req: Request, res: Response) => {
       : res.send(`
       <div>
         <p>You are not logged in</p>
-        <a href="/login">Login</a>
+        <a href="/auth/login">Login</a>
       </div>
     `);
   }
